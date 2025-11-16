@@ -12,7 +12,7 @@ public class Monster {
     // Special combat traits
     private boolean invisible = false;    // for monsters like Transparent Shrimp
     private int turnCounter = 0;          // track ability cycle
-    private int invisibilityStartTurn = 2; // For the Shrimp, default disabled
+    private int invisibilityStartTurn = -1; // For the Shrimp, default disabled
     private int invisibilityDuration = 1;
     private int invisibilityCooldown = 2;
 
