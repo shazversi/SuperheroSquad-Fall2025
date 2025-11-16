@@ -39,12 +39,13 @@ public class Player extends Character {
      * @return A new Player object with the entered name.
      */
     public static Player createPlayerFromInput() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter your name: ");
-        String playerName = scanner.nextLine();
-        Player player = new Player(playerName);
-        player.startGame();
-        return player;
+        try (Scanner scanner = new Scanner(System.in)) {
+            System.out.print("Enter your name: ");
+            String playerName = scanner.nextLine();
+            Player player = new Player(playerName);
+            player.startGame();
+            return player;
+        }
     }
 
     /**
@@ -53,12 +54,9 @@ public class Player extends Character {
      */
     public void saveGame(String filename) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
-            writer.write(name + "
-");
-            writer.write(hp + "
-");
-            writer.write(attack + "
-");
+            writer.write(name + "\n");
+            writer.write(hp + "\n");
+            writer.write(attack + "\n");
             for (String item : inventory) {
                 writer.write(item + ",");
             }
@@ -91,5 +89,21 @@ public class Player extends Character {
         }
     }
 
-    // Other methods remain unchanged (checkInventory, pickUpItem, dropItem, etc.)
+    /**
+     * Adds an item to the inventory if space allows.
+     * @param item The item to add.
+     */
+    public void pickUpItem(String item) {
+        if (inventory.size() < MAX_INVENTORY_SIZE) {
+            inventory.add(item);
+            System.out.println(item + " added to inventory.");
+        } else {
+            System.out.println("Inventory full! Cannot pick up " + item);
+        }
+    }
+
+    /** Displays the current inventory */
+    public void checkInventory() {
+        System.out.println("Inventory: " + inventory);
+    }
 }
