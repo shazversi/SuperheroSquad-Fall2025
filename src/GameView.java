@@ -8,10 +8,10 @@ import javax.swing.JLabel;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-public class GameView extends JFrame {
+public class GameView {
 
 	//"Help" command, list of commands
-	private void Help() throws IOException {
+	public void Help() throws IOException {
 		String file = "UserManual.txt";
 		try (Scanner scanner = new Scanner(new File(file))){
 			while (scanner.hasNextLine()) {
@@ -24,7 +24,7 @@ public class GameView extends JFrame {
 	}
 	
 	//"Read map" command, displays map on jframe
-	private static void readMap() {
+	public static void readMap() {
 		JFrame frame = new JFrame("Map display");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -35,6 +35,7 @@ public class GameView extends JFrame {
 		frame.pack();
 		frame.setVisible(true);
 	}
+	
 	
 	
 }
