@@ -2,46 +2,52 @@
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
-public class GameController {
+public class Game {
 
 
         private ArrayList<Room> Rooms = new ArrayList<>();
         private Player p;
         private GameView gameview;
 
-        Public void start() {
+        public void start() {
+        	Scanner input = new Scanner(System.in);
 
-        try {
-            Player player = loadPlayer("Player.txt");
-            List<Room> rooms = loadRooms("Room.csv");
-            List<Puzzle> puzzles = loadPuzzles("Puzzle.csv");
-            List<Monster> monsters = loadMonster("monster.txt");
-            List<Item> items = loadItems("Items.txt");
+      
+            try {
+            	GameFileReader reader = new GameFileReader();
+				Player player = reader.loadPlayer("Player.txt");
+				List<Room> rooms = reader.loadRooms("Room.csv");
+				List<Puzzle> puzzles = reader.loadPuzzles("Puzzle.csv");
+				List<Monster> monsters = reader.loadMonsters("monster.txt");
+		        List<Item> items = reader.loadItems("Items.txt");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+            
 
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-          System.out.println("You're lost. After your submarine crashed, you wake up protected by a huge \n" +
-                  "bubble. And then, you hear a voice... \n" +
-                  "'Find heart. Return balance...' " +
-                  "\nGloomy statues appear ahead."
-                  "\nMove commands: North, East, South, West" +
-                  "\nOther commands: Explore, Pickup [item], Inspect [item], Equip [item], Drop [item], Inventory, Examine [monster], Ignore [monster]" +
-                  "\nCombat commands: Attack, Heal." +
-                  "\nQ to quit." +
-                  "\nH for Help command.");
+            System.out.println(
+            	    "You're lost. After your submarine crashed, you wake up protected by a huge \n" +
+            	    "bubble. And then, you hear a voice...\n" +
+            	    "'Find heart. Return balance...'\n" +
+            	    "Gloomy statues appear ahead.\n" +
+            	    "Move commands: North, East, South, West\n" +
+            	    "Other commands: Explore, Pickup [item], Inspect [item], Equip [item], Drop [item], Inventory, Examine [monster], Ignore [monster]\n" +
+            	    "Combat commands: Attack, Heal\n" +
+            	    "Q to quit\n" +
+            	    "H for Help command"
+            	);
 
     //game status
-        while (p.getCurrentRoom() != null) {
+        while (p.getRoomNumber() != null) {
         System.out.println("You are in Room: " + p.getCurrentRoom());
         System.out.println("Exit towards (North, East, South, West)?: ");
-        c = Player.nextLine();
-        if (c.equalsIgnorCase("Quit game")) {
+  
+        String c;
+        c = input.nextLine();
+        if (c.equalsIgnoreCase("Quit game")) {
             System.out.println("Quit the game successfully.");
             break;
         }
@@ -51,13 +57,13 @@ public class GameController {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            c = Player.nextLine();
+            c = input.nextLine();
         }
         if (c.equalsIgnoreCase("Explore")) {
             System.out.println(p.getCurrentRoom().explore());
         } else if (c.startsWith("Pickup ")) {
             String itemName = c.substring(7).trim();
-            p.pickupItem(itemName);
+            p.pickUpItem(itemName);
         } else if (c.startsWith("Inspect ")) {
             String itemName = c.substring(8).trim();
             p.inspectItem(itemName);
@@ -218,8 +224,8 @@ public class GameController {
             }
         }
     }
-    public static void Main(String[] args) {
-        GameController game = new GameController();
+    public static void main(String[] args) {
+        Game game = new Game();
         game.start();
     }
 }

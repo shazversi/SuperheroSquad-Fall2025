@@ -8,7 +8,7 @@ import java.util.List;
 
 public class GameFileReader {
 
-    public static Player loadPlayer(String filePath) throws IOException {
+    public Player loadPlayer(String filePath) throws IOException {
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line = br.readLine();
             String[] parts = line.split(",");
