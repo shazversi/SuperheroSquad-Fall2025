@@ -17,6 +17,8 @@ public class GameController {
             Player player = loadPlayer("Player.txt");
             List<Room> rooms = loadRooms("Room.csv");
             List<Puzzle> puzzles = loadPuzzles("Puzzle.csv");
+            List<Monster> monsters = loadMonster("monster.txt");
+            List<Item> items = loadItems("Items.txt");
 
 
         } catch (IOException e) {
@@ -187,7 +189,7 @@ public class GameController {
 
             // Check if monster.txt is defeated
             if (monster.isDefeated()) {
-                System.out.println("You defeated the monster.txt!");
+                System.out.println("You defeated the monster!");
                 player.getCurrentRoom().removeMonster();
                 break;
             }
@@ -199,7 +201,7 @@ public class GameController {
 
             // Check if player is defeated
             if (!player.isAlive()) {
-                System.out.println("You were defeated by the monster.txt...");
+                System.out.println("You were defeated by the monster...");
                 System.out.println("Choose: Q or Restart");
                 String choice = inputScanner.nextLine().trim();
                 if (choice.equalsIgnoreCase("Restart")) {

@@ -4,7 +4,7 @@
  * Provides common attributes and behaviors such as name, health points (HP), and attack power.
  * Author: Triniese Thompson
  */
-package game.model;
+
 
 /**
  * The Character class serves as a foundation for entities that share combat-related attributes.
