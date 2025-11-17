@@ -1,4 +1,0 @@
-PlayerName
-50
-0
-Sword,Shield,Health Potion,

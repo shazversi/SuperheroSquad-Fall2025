@@ -1,6 +1,6 @@
 public class Monster {
 
-    // Basic monster stats
+    // Basic monster.txt stats
     private String name;
     private String description;
     private String droppedItem;
@@ -16,7 +16,7 @@ public class Monster {
     private int invisibilityDuration = 1;
     private int invisibilityCooldown = 2;
 
-    // Whether monster is removed after defeat
+    // Whether monster.txt is removed after defeat
     private boolean defeated = false;
 
     public Monster(String name, String description, String droppedItem,
