@@ -1,0 +1,32 @@
+Help Commands:
+
+"Explore" = Explore a room to provide room description, available items, and puzzle to solve.
+"Exit [direction]" = Exit a room and move into the next connected room.
+"Path" = Travel along paths and stairs.
+"Transport" = Transport a mechanism (e.g. submarines, portal) in a room.
+"Pick up item" = Removes an item from the room inventory and adds the item into the player's inventory.
+"Drop item" = Removes an item from the player's inventory and adds the item into the room inventory.
+"Equip item" = Allows the player to equip an item in the player’s inventory.
+"Consume item" = Allow the player to consume an item which would delete it from the player’s inventory.
+"Use item" = Allows the player to use an item which does not remove the item from the player's inventory.
+
+Puzzle Commands:
+"Solve" = Allows the player to attempt solving a puzzle using the "solve" command.
+"Unlock" = Allows the player to open locked passages with the correct item or condition (e.g. Trident key).
+"Align" = Allows the player to rotate or move objects in puzzles (e.g. Statue Alignment).
+"Reveal" = Allow the player to uncover hidden clues (e.g., using special items like the Glyph Lens).
+"Decode" = Allows the player to use a decoding item (e.g., Glyph Lens) to transform cryptic symbols or pulses into readable text or code.
+
+Monster Commands:
+"Attack" = To damage the monster.
+"Inspect" = To view the status of the monster (attack / hp remaining).
+"Flee" = To have a chance to escape.
+"Defend" = To reduce the damage taken.
+
+"Start game" = Player starts the game.
+"Save game" = Copies game progress for later use.
+"Resume/load game" = Starts game from where the player left off.
+"Quit game" = The game ends once the player is done with their session.
+"Check inventory" = Players can see what they have picked up from a room.
+"Check player statistics" = See hp and deal damage of player.
+"Read Map" = The player can see the map for navigation.
