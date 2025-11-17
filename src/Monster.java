@@ -83,6 +83,10 @@ public class Monster {
     public boolean isAlive() {
         return currentHP > 0;
     }
+    
+    public boolean isDead() {
+    	return currentHP <= 0;
+    }
 
     public boolean isInvisible() {
         return invisible;
