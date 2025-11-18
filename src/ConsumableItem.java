@@ -61,4 +61,8 @@ public class ConsumableItem extends Item {
         // The 'use' command for consumables is synonymous with 'consume'.
         return consume(player);
     }
+    
+    public int getHealedAmount() {
+    	return effectValue;
+    }
 }

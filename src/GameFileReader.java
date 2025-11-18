@@ -12,7 +12,10 @@ public class GameFileReader {
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line = br.readLine();
             String[] parts = line.split(",");
-            return new Player(parts[0].trim());
+            String name = parts[0].trim();
+            int health = Integer.parseInt(parts[1].trim());
+            int damage = Integer.parseInt(parts[2].trim());
+            return new Player(name, health, damage);
         }
     }
 
@@ -76,19 +79,54 @@ public class GameFileReader {
         List<Item> items = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
-            // Skip header lines
-            for (int i = 0; i < 7; i++) br.readLine();
+            // Skip header lines first 2 lines
+            br.readLine(); 
+            br.readLine();
 
             while ((line = br.readLine()) != null) {
-                String[] parts = line.split("\\s{2,}|\\t"); // Split by multiple spaces or tabs
-                if (parts.length >= 6) {
-                    int id = Integer.parseInt(parts[0].trim());
-                    String roomLocation = parts[1].trim();
-                    String name = parts[2].trim();
-                    String type = parts[3].trim();
-                    String effect = parts[4].trim();
-                    String description = parts[5].trim();
-                    items.add(new Item(id, roomLocation, name, type, effect, description));
+                if (line.isBlank()) continue;
+                // Split by pipe and trim spaces
+                String[] parts = line.split("\\|");
+                if (parts.length < 6) continue;
+
+                String roomLocation = parts[1].trim();
+                String name = parts[2].trim();
+                String type = parts[3].trim().toLowerCase();
+                String effect = parts[4].trim();
+                String description = parts[5].trim();
+
+                switch (type) {
+                    case "equip able":
+                        // Parse effect for damage/reduction
+                        int damage = 0;
+                        int reduction = 0;
+                        if (effect.toLowerCase().contains("deal damage")) {
+                            damage = Integer.parseInt(effect.replaceAll("\\D+", ""));
+                        } else if (effect.toLowerCase().contains("reduce monster attacks")) {
+                            reduction = Integer.parseInt(effect.replaceAll("\\D+", ""));
+                        }
+                        items.add(new EquippableItem(name, description, damage, reduction));
+                        break;
+                    case "consumable":
+                        // Example: Heal, invisibility, bypass
+                        String effectType = "HEAL"; // default
+                        int value = 0;
+                        if (effect.toLowerCase().contains("increase")) {
+                            value = Integer.parseInt(effect.replaceAll("\\D+", ""));
+                            effectType = "HEAL";
+                        } else if (effect.toLowerCase().contains("invisible")) {
+                            effectType = "INVISIBILITY";
+                            value = 2; // default turns
+                        } else if (effect.toLowerCase().contains("skip")) {
+                            effectType = "BYPASS_PUZZLE";
+                        }
+                        items.add(new ConsumableItem(name, description, effectType, value));
+                        break;
+                    case "useable":
+                        items.add(new UseableItem(name, description, name.toUpperCase().replaceAll(" ", "_")));
+                        break;
+                    default:
+                        System.out.println("Unknown item type: " + type);
                 }
             }
         }

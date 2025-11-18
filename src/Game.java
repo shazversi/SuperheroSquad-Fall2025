@@ -18,6 +18,7 @@ public class Game {
       
             try {
             	GameFileReader reader = new GameFileReader();
+            	p = reader.loadPlayer("Player.txt");
 				Player player = reader.loadPlayer("Player.txt");
 				List<Room> rooms = reader.loadRooms("Room.csv");
 				List<Puzzle> puzzles = reader.loadPuzzles("Puzzle.csv");
@@ -41,8 +42,8 @@ public class Game {
             	);
 
     //game status
-        while (p.getRoomNumber() != null) {
-        System.out.println("You are in Room: " + p.getCurrentRoom());
+        while (p.getCurrentRoom() != null) {
+        System.out.println("You are in Room: " + p.getCurrentRoom().getRoomNumber());
         System.out.println("Exit towards (North, East, South, West)?: ");
   
         String c;
@@ -110,7 +111,7 @@ public class Game {
                 Puzzle puzzle = p.getCurrentRoom().getPuzzle();
                 System.out.println(puzzle.getDescription());
 
-                int attemptsLeft = puzzle.getAttempts();
+                int attemptsLeft = puzzle.getMaxAttempts();
                 boolean solved = false;
 
                 while (attemptsLeft > 0) {
@@ -169,7 +170,7 @@ public class Game {
     public void startCombat(Player player, Monster monster, Scanner inputScanner) {
         System.out.println("Combat started with " + monster.getName() + "!");
 
-        while (player.isAlive() && !monster.isDefeated()) {
+        while (player.isAlive() && !monster.isDead()) {
             // Player's turn
             System.out.println("\nYour HP: " + player.getHealth() + " | Monster HP: " + monster.getHitPoints());
             System.out.println("Choose your action: Attack, Heal [item]");
@@ -178,7 +179,7 @@ public class Game {
 
             if (action.equalsIgnoreCase("Attack")) {
                 int damage = player.getDamage();
-                monster.takeDamage(damage);
+                monster.takePlayerAttack(damage);
                 System.out.println("You attacked " + monster.getName() + " for " + damage + " damage.");
             } else if (action.startsWith("Heal ")) {
                 String itemName = action.substring(5).trim();
@@ -194,7 +195,7 @@ public class Game {
             }
 
             // Check if monster.txt is defeated
-            if (monster.isDefeated()) {
+            if (monster.isDead()) {
                 System.out.println("You defeated the monster!");
                 player.getCurrentRoom().removeMonster();
                 break;
