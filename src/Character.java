@@ -62,4 +62,8 @@ public abstract class Character {
             System.out.println(this.name + " attacks " + target.getName() + " for " + this.attack + " damage.");
         }
     }
+    public boolean isAlive() {
+        return hp > 0;
+    }
+}
 }

@@ -18,9 +18,11 @@ public class Game {
       
             try {
             	GameFileReader reader = new GameFileReader();
+                gameview = new GameView();
             	p = reader.loadPlayer("Player.txt");
-				Player player = reader.loadPlayer("Player.txt");
-				List<Room> rooms = reader.loadRooms("Room.csv");
+				//Player player = reader.loadPlayer("Player.txt");
+				//List<Room> rooms = reader.loadRooms("Room.csv");
+                Rooms = new ArrayList<>(reader.loadRooms("Room.csv"));
 				List<Puzzle> puzzles = reader.loadPuzzles("Puzzle.csv");
 				List<Monster> monsters = reader.loadMonsters("monster.txt");
 		        List<Item> items = reader.loadItems("Items.txt");
@@ -61,10 +63,12 @@ public class Game {
             c = input.nextLine();
         }
         if (c.equalsIgnoreCase("Explore")) {
-            System.out.println(p.getCurrentRoom().explore());
+            //System.out.println(p.getCurrentRoom().explore());
+            gameview.roomExplore(p.getCurrentRoom());
         } else if (c.startsWith("Pickup ")) {
             String itemName = c.substring(7).trim();
-            p.pickUpItem(itemName);
+            Item item = p.getCurrentRoom().findItem(itemName);
+            p.pickUpItem(item);
         } else if (c.startsWith("Inspect ")) {
             String itemName = c.substring(8).trim();
             p.inspectItem(itemName);
@@ -84,7 +88,7 @@ public class Game {
         } else if (c.equalsIgnoreCase("Read Map")) {
             gameview.readMap();
         } else {
-            int NextRoomNum = p.getCurrentRoom().getNextRoom(c);
+            int NextRoomNum = p.getCurrentRoom().getConnectedRoom(c);
             //checks if door isn't there (0)
             if (NextRoomNum == 0) {
                 System.out.println("No door there.");
@@ -111,32 +115,37 @@ public class Game {
                 Puzzle puzzle = p.getCurrentRoom().getPuzzle();
                 System.out.println(puzzle.getDescription());
 
-                int attemptsLeft = puzzle.getMaxAttempts();
-                boolean solved = false;
+                //int attemptsLeft = puzzle.getMaxAttempts();
+                //boolean solved = false;
 
-                while (attemptsLeft > 0) {
+                //while (attemptsLeft > 0) {
+                while (puzzle.attemptPuzzle()) {
                     System.out.println("Enter your answer: ");
+                    String answer = input.nextLine();
+
+                    if (puzzle.checkSolution(answer)) {
                     String inputp = Player.nextLine();
                     if (puzzle.isSolved()) {
                         System.out.println("You solved the puzzle correctly!");
-                        solved = true;
+                        System.out.println(puzzle.getSuccessMessage());
+                        p.getCurrentRoom().removePuzzle();
                         break;
 
-                    } else
-                        attemptsLeft--;
-                    {  if (attemptsLeft > 0) {
-                        System.out.println("The answer you provided is wrong, you still have " + attemptsLeft + " attempts. Try one more time.");
-
                     } else {
-                        System.out.println("Failed to solve.");
-
-                    }
+                        //attemptsLeft--;
+                        if (puzzle.attemptsLeft() > 0) {
+                            System.out.println("The answer you provided is wrong, you still have " + puzzle.attemptsLeft() + " attempts. Try one more time.");
+                        } else {
+                            System.out.println("Failed to solve.");
+                            System.out.println(puzzle.getFailureMessage());
+                        }
                     }
                 }
 
-                if (solved) {
-                    p.getCurrentRoom().removePuzzle(); // Remove puzzle from room
-                }
+
+                //if (solved) {
+                 //   p.getCurrentRoom().removePuzzle(); // Remove puzzle from room
+                //}
             }
 
             if (p.getCurrentRoom().hasMonster()) {
@@ -154,10 +163,12 @@ public class Game {
                         System.out.println(monster.getDescription());
                         decision = Player.nextLine().trim();
                     } else if (decision.equalsIgnoreCase("Attack")) {
-                        startCombat(p, monster, Player);
+                        startCombat(p, monster, input);
                     } else {
                         System.out.println("Invalid choice. Attack or Ignore:");
-                        c = Player.nextLine();
+                        //c = Player.nextLine();
+                        c = input.nextLine();
+
                     }
                 }
             }
