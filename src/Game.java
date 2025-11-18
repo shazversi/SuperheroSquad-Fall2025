@@ -19,10 +19,11 @@ public class Game {
             try {
             	GameFileReader reader = new GameFileReader();
                 gameview = new GameView();
-            	p = reader.loadPlayer("Player.txt");
+            	//p = reader.loadPlayer("Player.txt");
 				//Player player = reader.loadPlayer("Player.txt");
 				//List<Room> rooms = reader.loadRooms("Room.csv");
                 Rooms = new ArrayList<>(reader.loadRooms("Room.csv"));
+                p = reader.loadPlayer("Player.txt");
 				List<Puzzle> puzzles = reader.loadPuzzles("Puzzle.csv");
 				List<Monster> monsters = reader.loadMonsters("monster.txt");
 		        List<Item> items = reader.loadItems("Items.txt");
@@ -183,7 +184,7 @@ public class Game {
 
         while (player.isAlive() && !monster.isDead()) {
             // Player's turn
-            System.out.println("\nYour HP: " + player.getHp() + " | Monster HP: " + monster.getHitPoints());
+            System.out.println("\nYour HP: " + player.getHp() + " | Monster HP: " + monster.getHP());
             System.out.println("Choose your action: Attack, Heal [item]");
 
             String action = inputScanner.nextLine().trim();
@@ -213,7 +214,7 @@ public class Game {
             }
 
             // Monster's turn
-            int monsterDamage = monster.attackPlayer();
+            int monsterDamage = monster.attackPlayer(false,0);
             player.takeDamage(monsterDamage);
             System.out.println(monster.getName() + " attacked you for " + monsterDamage + " damage.");
 

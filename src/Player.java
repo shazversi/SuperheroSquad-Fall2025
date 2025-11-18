@@ -78,6 +78,10 @@ public class Player extends Character {
         }
     }
 
+    public void heal(int amount) {
+        hp += amount;
+    }
+
     // Heal using consumable item
     public void healItem(String itemName) {
         for (Item i : inventory) {
@@ -119,5 +123,23 @@ public class Player extends Character {
     public static String nextLine() {
         Scanner sc = new Scanner(System.in);
         return sc.nextLine();
+    }
+
+    public int getDamage() {
+        return attack;
+    }
+
+    public void takeDamage(int amount) {
+        hp = hp - amount;
+    }
+
+    public void applyInvisibility(int effectValue) {
+    }
+
+    public void markPuzzleBypassAvailable() {
+    }
+
+    public Inventory getInventory() {
+        return null;
     }
 }
