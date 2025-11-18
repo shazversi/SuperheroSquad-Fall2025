@@ -124,6 +124,8 @@ public class Game {
                     String answer = input.nextLine();
 
                     if (puzzle.checkSolution(answer)) {
+                    String inputp = Player.nextLine();
+                    if (puzzle.isSolved()) {
                         System.out.println("You solved the puzzle correctly!");
                         System.out.println(puzzle.getSuccessMessage());
                         p.getCurrentRoom().removePuzzle();
