@@ -127,6 +127,20 @@ public class Room {
     public void removeMonster() {
         this.monster = null;
     }
+
+    public ArrayList<Item> explore() {
+        return items;
+    }
+
+    public Item findItem(String name) {
+        for (Item item : items) {
+            if (item.getName().equalsIgnoreCase(name)) {
+                return item;
+            }
+        }
+        return null;
+    }
+
     //PATH GETTERS AND SETTERS
     public boolean hasPath() {
         return hasPath;
@@ -167,5 +181,9 @@ public class Room {
 
     public void setPuzzleID(String puzzleID) {
         this.puzzleID = puzzleID;
+    }
+
+    public void removePuzzle() {
+        this.puzzle = null;
     }
 }

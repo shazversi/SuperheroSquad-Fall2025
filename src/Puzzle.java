@@ -9,6 +9,9 @@ public class Puzzle {
     private int maxAttempts;
     private int attemptsMade;
     private boolean isSolved;
+    private String successMessage;
+    private String failureMessage;
+    private String solutionDescription;
 
     public Puzzle(String puzzleID, String name, String description, String answer, int maxAttempts) {
         this.puzzleID = puzzleID;
@@ -67,5 +70,17 @@ public class Puzzle {
 
     public boolean attemptPuzzle() {
         return attemptsMade <= maxAttempts && !isSolved;
+    }
+
+    public String getSuccessMessage() {
+        return successMessage;
+    }
+
+    public String getFailureMessage() {
+        return failureMessage;
+    }
+
+    public String getSolutionDescription() {
+        return solutionDescription;
     }
 }

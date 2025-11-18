@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import javax.swing.ImageIcon;
@@ -35,7 +36,18 @@ public class GameView {
 		frame.pack();
 		frame.setVisible(true);
 	}
-	
+	public void roomExplore(Room room) {
+		ArrayList<Item> itemFound = room.explore();
+
+		if (itemFound.isEmpty()) {
+			System.out.println("There are no items in this room");
+		} else {
+			System.out.println("You see the following items:");
+			for (Item item : itemFound) {
+				System.out.println(item.getName());
+			}
+		}
+	}
 	
 	
 }

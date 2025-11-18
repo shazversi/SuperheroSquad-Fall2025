@@ -1,10 +1,12 @@
 /*Author: Sean Lor*/
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.io.FileReader;
 import java.util.List;
+import java.util.Scanner;
 
 public class GameFileReader {
 
@@ -19,24 +21,39 @@ public class GameFileReader {
         }
     }
 
-    public static List<Room> loadRooms(String filePath) throws IOException {
-        List<Room> rooms = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = br.readLine()) != null) {
+
+    public static ArrayList<Room> loadRooms(String filename) {
+        //return all rooms
+        ArrayList<Room> all = new ArrayList<>();
+        try (
+                //reading the csv file
+                Scanner in = new Scanner(new FileInputStream(filename));
+        ) {
+            while (in.hasNextLine()) {
+                String line = in.nextLine();
                 String[] parts = line.split(",");
-                if (parts.length >= 9) {
-                    rooms.add(new Room(
-                            Integer.parseInt(parts[0].trim()),
-                            Integer.parseInt(parts[1].trim()),
-                            parts[3].trim(),
-                            parts[4].trim()
-                    ));
-                }
+
+                int zone = Integer.parseInt(parts[0]);
+                int num = Integer.parseInt(parts[1]);
+                boolean visited = Boolean.parseBoolean(parts[2]);
+                String name = parts[3];
+                String description = parts[4];
+
+                //connections
+                int north = Integer.parseInt(parts[5]);
+                int east = Integer.parseInt(parts[6]);
+                int south = Integer.parseInt(parts[7]);
+                int west = Integer.parseInt(parts[8]);
+                //new room object
+                Room a = new Room(zone, num, name, description);
+
             }
+        } catch (Exception e) {
+            System.out.println(e);
         }
-        return rooms;
+        return all;
     }
+
 
     public static List<Puzzle> loadPuzzles(String filePath) throws IOException {
         List<Puzzle> puzzles = new ArrayList<>();
