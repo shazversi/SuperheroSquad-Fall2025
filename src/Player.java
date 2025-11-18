@@ -20,6 +20,10 @@ public class Player extends Character {
     public void setCurrentRoom(Room room) {
         this.currentRoom = room;
     }
+    
+    public boolean isAlive() {
+    	return this.getHp() > 0;
+    }
 
     // Pickup item from room
     public void pickUpItem(Item item) {

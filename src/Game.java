@@ -116,8 +116,8 @@ public class Game {
 
                 while (attemptsLeft > 0) {
                     System.out.println("Enter your answer: ");
-                    String input = Player.nextLine();
-                    if (puzzle.trySolve(input)) {
+                    String inputp = Player.nextLine();
+                    if (puzzle.isSolved()) {
                         System.out.println("You solved the puzzle correctly!");
                         solved = true;
                         break;
@@ -172,7 +172,7 @@ public class Game {
 
         while (player.isAlive() && !monster.isDead()) {
             // Player's turn
-            System.out.println("\nYour HP: " + player.getHealth() + " | Monster HP: " + monster.getHitPoints());
+            System.out.println("\nYour HP: " + player.getHp() + " | Monster HP: " + monster.getHitPoints());
             System.out.println("Choose your action: Attack, Heal [item]");
 
             String action = inputScanner.nextLine().trim();
