@@ -66,4 +66,4 @@ public abstract class Character {
         return hp > 0;
     }
 }
-}
+

@@ -27,7 +27,8 @@ public class EquippableItem extends Item {
     @Override
     public boolean equip(Player player) {
         // FR7: Equip an item (logic handled by Player class)
-        return player.equipItem(this);
+         player.equipItem(getName());
+         return true;
     }
 
     @Override
