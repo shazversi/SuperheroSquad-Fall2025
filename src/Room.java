@@ -13,7 +13,7 @@ public class Room {
     private String name;
     private String description;
     private Map<String, Integer> exits;
-    private boolean visited;
+    boolean visited;
     private ArrayList<Item> items = new ArrayList<>();
     private Puzzle puzzle;
     private boolean puzzleSolved = false;
@@ -24,16 +24,26 @@ public class Room {
     private int pathDestination;
     private int transportDestination;
     private String puzzleID;
+    private int north;
+    private int east;
+    private int south;
+    private int west;
+
 
     //constructor
-    public Room(int zone, int roomNumber, String name, String description) {
+    public Room(int zone, int roomNumber, boolean visited, String name, String description, int north, int east, int south, int west) {
         this.zone = zone;
         this.roomNumber = roomNumber;
         this.name = name;
         this.description = description;
         this.exits = new HashMap<>();
-        this.visited = false;
+        this.visited = visited;
         this.items = new ArrayList<Item>();
+        this.north = north;
+        this.east = east;
+        this.south = south;
+        this.west = west;
+
     }
 
     //getters

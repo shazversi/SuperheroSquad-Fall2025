@@ -4,12 +4,15 @@
  * Note: Requires the Player class to be available.
  */
 public abstract class Item {
-
+    //private final int id;
+   //private final String roomLocation;
     private final String name;
     private final String description;
     private final String itemType;
 
     public Item(String name, String description, String itemType) {
+        //this.id = id;
+        //this.roomLocation = roomLocation;
         this.name = name;
         this.description = description;
         this.itemType = itemType;

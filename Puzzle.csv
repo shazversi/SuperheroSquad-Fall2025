@@ -1,7 +1,0 @@
-P1,2,Mosaic Gap,The picture on the floor is broken.,5,5 pieces must be placed in order: corner → side → center.,corner|side|center|side|corner,Trident key appears,no key
-P2,4,Sealed Portal,A big door is locked.,5,Insert the Trident Key into the slot.,insert trident key,portal unlocks,guardians appear
-P3,8,Statue Alignment,4 statues are facing the wrong way,5,Rotate each statue in the order North-South-East-West. Trick: “sun rises in the west” clue.,west|west|west|west,Tidal Altar door opens,trap activates and player loses HP
-P4,9,Tidal Cycle,Water goes up and down in the room.,5,Pull levers in exact order:Ebb -> Still -> Ebb -> Flow. Ebb = Left | Still = Middle | Flow = Right,left|middle|left|right,Floor drains for crossing.,levers lock and resets
-P5,10,Blinding Code,A ghost taps a strange code.,5,Listen: short-short-long-long = code. Use Glyph Lens to decode into a word.,free,Spirit vanishes and upgrades lens.,lens flicker
-P6,13,Illusory Doors,Many doors look the same.,5,Use Glyph Lens: only one door shows a faint light. Choose that door to continue.,door3,door opens,puzzle resets
-P7,15,Flame Bridge Patterns,A bridge has safe and unsafe tiles.,5,Steam reveals safe tiles are 1 and 3 and 5,1|3|5,you cross safely,you fall and reset

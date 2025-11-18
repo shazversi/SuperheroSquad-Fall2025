@@ -3,6 +3,7 @@
 //Puzzle.csv -> puzzleID,room location,name,description,# of attempts,solution description,solution,success message,failure message
 public class Puzzle {
     private String puzzleID;
+    private int roomNum;
     private String name;
     private String description;
     private String answer;
@@ -13,14 +14,18 @@ public class Puzzle {
     private String failureMessage;
     private String solutionDescription;
 
-    public Puzzle(String puzzleID, String name, String description, String answer, int maxAttempts) {
+    public Puzzle(String puzzleID, int roomNum, String name, String description, int maxAttempts, String solutionDescription, String answer, String successMessage, String failureMessage) {
         this.puzzleID = puzzleID;
+        this.roomNum = roomNum;
         this.name = name;
         this.description = description;
         this.answer = answer;
         this.maxAttempts = maxAttempts;
         this.attemptsMade = 0;
         this.isSolved = false;
+        this.solutionDescription = solutionDescription;
+        this.successMessage = successMessage;
+        this.failureMessage = failureMessage;
     }
 
     //getters
