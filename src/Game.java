@@ -24,6 +24,9 @@ public class Game {
                 //List<Room> rooms = reader.loadRooms("Room.csv");
                 Rooms = new ArrayList<>(reader.loadRooms("Room.csv"));
                 p = reader.loadPlayer("Player.txt");
+                if (!Rooms.isEmpty()) {
+                    p.setCurrentRoom(Rooms.get(0)); // Set the first room as starting room
+                }
                 GameFileReader.loadPuzzles("Puzzle.csv");
                 //List<Puzzle> puzzles = reader.loadPuzzles("Puzzle.csv");
                 List<Monster> monsters = reader.loadMonsters("monster.txt");
