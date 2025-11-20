@@ -22,13 +22,13 @@ public class Game {
                 //p = reader.loadPlayer("Player.txt");
                 //Player player = reader.loadPlayer("Player.txt");
                 //List<Room> rooms = reader.loadRooms("Room.csv");
-                Rooms = new ArrayList<>(reader.loadRooms("SuperheroSquad-Fall2025/Room.csv"));
-                p = reader.loadPlayer("SuperheroSquad-Fall2025/Player.txt");
-                GameFileReader.loadPuzzles("SuperheroSquad-Fall2025/Puzzle.csv");
+                Rooms = new ArrayList<>(reader.loadRooms("Room.csv"));
+                p = reader.loadPlayer("Player.txt");
+                GameFileReader.loadPuzzles("Puzzle.csv");
                 //List<Puzzle> puzzles = reader.loadPuzzles("Puzzle.csv");
-                List<Monster> monsters = reader.loadMonsters("SuperheroSquad-Fall2025/monster.txt");
+                List<Monster> monsters = reader.loadMonsters("monster.txt");
                 //List<Item> items = reader.loadItems("Items.txt");
-                GameFileReader.loadItems("SuperheroSquad-Fall2025/Items.txt");
+                GameFileReader.loadItems("Items.txt");
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -153,9 +153,9 @@ public class GameFileReader {
                     continue;
                 }
 
-                String name = parts[0].replace("\"", "").trim();
-                String description = parts[1].replace("\"", "").trim();
-                String dropItem = parts[2].replace("\"", "").trim();
+                String name = parts[0].trim();
+                String description = parts[1].trim();
+                String dropItem = parts[2].trim();
                 int attack = Integer.parseInt(parts[3].trim());
                 int defense = Integer.parseInt(parts[4].trim());
                 int hp = Integer.parseInt(parts[5].trim());
