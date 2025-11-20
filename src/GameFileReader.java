@@ -86,7 +86,7 @@ public class GameFileReader {
 
     */
 
-    public static ArrayList<Puzzle> loadPuzzles(String filename) {
+    public static ArrayList<Puzzle> loadPuzzles(String filename, ArrayList<Room> r) {
         //return all rooms
         ArrayList<Puzzle> puzzles = new ArrayList<>();
         try (
@@ -108,6 +108,12 @@ public class GameFileReader {
                 String failureMessage = parts[8].trim();
 
                 Puzzle puzzle = new Puzzle(puzzleID, roomNum, name, description, maxAttempts, solutionDescription, answer, successMessage, failureMessage);
+                for (Room room : r) {
+                    if (room.getRoomNumber() == roomNum) {
+                        room.setPuzzle(puzzle);
+                        break;
+                    }
+                }
                 puzzles.add(puzzle);
             }
         } catch (Exception e) {
@@ -137,7 +143,7 @@ public class GameFileReader {
     }
 */
 
-    public static List<Monster> loadMonsters(String filePath) {
+    public static List<Monster> loadMonsters(String filePath, ArrayList<Room> r) {
         List<Monster> monsters = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
@@ -156,11 +162,17 @@ public class GameFileReader {
                 String name = parts[0].trim();
                 String description = parts[1].trim();
                 String dropItem = parts[2].trim();
-                int attack = Integer.parseInt(parts[3].trim());
-                int defense = Integer.parseInt(parts[4].trim());
+                int roomId = Integer.parseInt(parts[3].trim());
+                int atk = Integer.parseInt(parts[4].trim());
                 int hp = Integer.parseInt(parts[5].trim());
 
-                Monster monster = new Monster(name, description, dropItem, attack, defense, hp);
+                Monster monster = new Monster(name, description, dropItem, roomId, atk, hp);
+                for (Room room : r) {
+                    if (room.getRoomNumber() == roomId) {
+                        room.setMonster(monster);
+                        break;
+                    }
+                }
                 monsters.add(monster);
             }
         } catch (Exception e) {
