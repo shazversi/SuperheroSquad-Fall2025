@@ -86,7 +86,7 @@ public class GameFileReader {
 
     */
 
-    public static ArrayList<Puzzle> loadPuzzles(String filename) {
+    public static ArrayList<Puzzle> loadPuzzles(String filename, ArrayList<Room> rooms) {
         //return all rooms
         ArrayList<Puzzle> puzzles = new ArrayList<>();
         try (
@@ -109,6 +109,11 @@ public class GameFileReader {
 
                 Puzzle puzzle = new Puzzle(puzzleID, roomNum, name, description, maxAttempts, solutionDescription, answer, successMessage, failureMessage);
                 puzzles.add(puzzle);
+                for (Room room : rooms) {
+                    if (room.getRoomNumber() == roomNum) {
+                        room.setPuzzle(puzzle);
+                    }
+                }
             }
         } catch (Exception e) {
             System.out.println(e);
