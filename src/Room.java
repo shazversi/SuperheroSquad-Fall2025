@@ -47,6 +47,11 @@ public class Room {
     }
 
     //getters
+
+    public boolean isPuzzleSolved() {
+        return puzzleSolved;
+    }
+
     public int getZone() {
         return zone;
     }
@@ -114,8 +119,9 @@ public class Room {
         return puzzle;
     }
 
-    public void markPuzzleSolved() {
+    public boolean markPuzzleSolved() {
         puzzleSolved = true;
+        return true;
     }
 
     public boolean hasMonster() {
