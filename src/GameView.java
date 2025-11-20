@@ -36,6 +36,7 @@ public class GameView {
 		frame.pack();
 		frame.setVisible(true);
 	}
+	
 	public void roomExplore(Room room) {
 		ArrayList<Item> itemFound = room.explore();
 

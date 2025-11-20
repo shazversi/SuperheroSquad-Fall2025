@@ -228,65 +228,97 @@ public class GameFileReader {
         return items;
     }
 */
-   public static List<Item> loadItems(String filePath) throws IOException {
-       List<Item> items = new ArrayList<>();
-       try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-           String line;
+    public static List<Item> loadItems(String filePath, List<Room> rooms) throws IOException {
+        List<Item> items = new ArrayList<>();
 
-           while ((line = br.readLine()) != null) {
-               if (line.isBlank()) continue;
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
 
-               // Split by pipe
-               String[] parts = line.split("\\|");
-               if (parts.length < 6) continue;
+            while ((line = br.readLine()) != null) {
+                if (line.isBlank()) continue;
 
-               // Parse fields
-               int id = Integer.parseInt(parts[0].trim());   // Item ID
-               String roomLocation = parts[1].trim();        // keep as String
-               String name = parts[2].trim();
-               String type = parts[3].trim().toLowerCase();
-               String effect = parts[4].trim();
-               String description = parts[5].trim();
+                // Split by pipe
+                String[] parts = line.split("\\|");
+                if (parts.length < 6) continue;
 
-               switch (type) {
-                   case "equipable":
-                       int damage = 0;
-                       int reduction = 0;
-                       if (effect.toLowerCase().contains("deal damage")) {
-                           damage = Integer.parseInt(effect.replaceAll("\\D+", ""));
-                       } else if (effect.toLowerCase().contains("reduce monster attacks")) {
-                           reduction = Integer.parseInt(effect.replaceAll("\\D+", ""));
-                       }
-                       items.add(new EquippableItem(name, description, damage, reduction));
-                       break;
+                // Parse fields
+                int id = Integer.parseInt(parts[0].trim());         // Item ID
+                String roomLocation = parts[1].trim();              // Can be "N/A" or comma-separated room numbers
+                String name = parts[2].trim();
+                String type = parts[3].trim().toLowerCase();
+                String effect = parts[4].trim();
+                String description = parts[5].trim();
 
-                   case "consumable":
-                       String effectType = "HEAL";
-                       int value = 0;
-                       if (effect.toLowerCase().contains("increase")) {
-                           value = Integer.parseInt(effect.replaceAll("\\D+", ""));
-                           effectType = "HEAL";
-                       } else if (effect.toLowerCase().contains("invisible")) {
-                           effectType = "INVISIBILITY";
-                           value = 2;
-                       } else if (effect.toLowerCase().contains("skip")) {
-                           effectType = "BYPASS_PUZZLE";
-                       }
-                       items.add(new ConsumableItem(name, description, effectType, value));
-                       break;
+                Item item = null;
 
-                   case "useable":
-                       String actionCode = name.toUpperCase().replaceAll(" ", "_");
-                       items.add(new UseableItem(name, description, actionCode));
-                       break;
+                // Create the correct Item subclass
+                switch (type) {
+                    case "equipable":
+                        int damage = 0;
+                        int reduction = 0;
+                        if (effect.toLowerCase().contains("deal damage")) {
+                            damage = Integer.parseInt(effect.replaceAll("\\D+", ""));
+                        } else if (effect.toLowerCase().contains("reduce monster attacks")) {
+                            reduction = Integer.parseInt(effect.replaceAll("\\D+", ""));
+                        }
+                        item = new EquippableItem(name, description, damage, reduction);
+                        break;
 
-                   default:
-                       System.out.println("Unknown item type: " + type);
-               }
-           }
-       }
-       return items;
-   }
+                    case "consumable":
+                        String effectType = "HEAL";
+                        int value = 0;
+                        if (effect.toLowerCase().contains("increase")) {
+                            value = Integer.parseInt(effect.replaceAll("\\D+", ""));
+                            effectType = "HEAL";
+                        } else if (effect.toLowerCase().contains("invisible")) {
+                            effectType = "INVISIBILITY";
+                            value = 2;
+                        } else if (effect.toLowerCase().contains("skip")) {
+                            effectType = "BYPASS_PUZZLE";
+                        }
+                        item = new ConsumableItem(name, description, effectType, value);
+                        break;
+
+                    case "useable":
+                        String actionCode = name.toUpperCase().replaceAll(" ", "_");
+                        item = new UseableItem(name, description, actionCode);
+                        break;
+
+                    default:
+                        System.out.println("Unknown item type: " + type);
+                        continue; // skip unknown types
+                }
+
+                // Add item to master list
+                items.add(item);
+
+                // Assign item to rooms if roomLocation is numeric
+                if (!roomLocation.startsWith("N/A")) {
+                    String[] roomNumbers = roomLocation.split(",");
+                    for (String rn : roomNumbers) {
+                        int roomNum = Integer.parseInt(rn.trim());
+                        Room room = findRoomByNumber(rooms, roomNum);
+                        if (room != null) {
+                            room.addItem(item); // ✅ add the single item to the room
+                        }
+                    }
+                }
+            }
+        }
+
+        return items;
+    }
+
+    // Helper method to find a room by its number
+    private static Room findRoomByNumber(List<Room> rooms, int roomNumber) {
+        for (Room room : rooms) {
+            if (room.getRoomNumber() == roomNumber) {
+                return room;
+            }
+        }
+        return null;
+    }
+
 
 
 }
