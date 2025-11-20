@@ -1,8 +1,0 @@
-Big Head Turtle|A giant green shield turtle with a big head used to attack the player|Turtle Shield|4|5|30
-Speedy Seahorse|Green and blue small seahorse with high speed to attack or escape|Health Potion|5|6|20
-Armor Herring|Small armored fish that attack in groups and overwhelm the player|Armor|7|4|25
-King Crab|Large red crab studded with gold, clicking huge claws|Poseidon's Trident|17|8|40
-Hammerhead Shark|Long gray shark with high HP. Creates large waves to attack|Health Potion|9|10|50
-Giant Jellyfish|Red sparkly jellyfish with long tentacles, floating among swarms|Health Potion|16|15|80
-Siren|Being with an enchanting voice, luring sailors to their end|Health Potion|6|12|70
-Transparent Shrimp|Chrome-colored shrimp that turns invisible every 2 turns for 1 turn|Heart of Atlantis|20|25|100
