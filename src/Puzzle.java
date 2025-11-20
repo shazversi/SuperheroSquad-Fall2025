@@ -65,6 +65,7 @@ public class Puzzle {
             return true;
         }
         else {
+            //attemptsMade--;
             return false;
         }
     }
