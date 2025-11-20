@@ -31,9 +31,9 @@ public class Game {
                 GameFileReader.loadPuzzles("Puzzle.csv",Rooms);
 
                 //List<Puzzle> puzzles = reader.loadPuzzles("Puzzle.csv");
-                List<Monster> monsters = reader.loadMonsters("monster.txt");
+                List<Monster> monsters = reader.loadMonsters("monster.txt", Rooms);
                 //List<Item> items = reader.loadItems("Items.txt");
-                GameFileReader.loadItems("Items.txt");
+                GameFileReader.loadItems("Items.txt", Rooms);
             } catch (Exception e) {
                 e.printStackTrace();
             }

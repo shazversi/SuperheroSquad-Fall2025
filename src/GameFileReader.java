@@ -3,6 +3,7 @@
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.io.FileReader;
 import java.util.List;
@@ -107,7 +108,14 @@ public class GameFileReader {
                 String successMessage = parts[7].trim();
                 String failureMessage = parts[8].trim();
 
+
                 Puzzle puzzle = new Puzzle(puzzleID, roomNum, name, description, maxAttempts, solutionDescription, answer, successMessage, failureMessage);
+                for (Room room : r) {
+                    if (room.getRoomNumber() == roomNum) {
+                        room.setPuzzle(puzzle);
+                        break;
+                    }
+                }
                 puzzles.add(puzzle);
                 for (Room room : rooms) {
                     if (room.getRoomNumber() == roomNum) {
@@ -142,8 +150,8 @@ public class GameFileReader {
     }
 */
 
-    public static List<Monster> loadMonsters(String filePath) {
-        List<Monster> monsters = new ArrayList<>();
+    public static ArrayList<Monster> loadMonsters(String filePath, ArrayList<Room> r) throws IOException {
+        ArrayList<Monster> monsters = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
@@ -161,14 +169,20 @@ public class GameFileReader {
                 String name = parts[0].trim();
                 String description = parts[1].trim();
                 String dropItem = parts[2].trim();
-                int attack = Integer.parseInt(parts[3].trim());
-                int defense = Integer.parseInt(parts[4].trim());
+                int roomId = Integer.parseInt(parts[3].trim());
+                int atk = Integer.parseInt(parts[4].trim());
                 int hp = Integer.parseInt(parts[5].trim());
 
-                Monster monster = new Monster(name, description, dropItem, attack, defense, hp);
-                monsters.add(monster);
+                Monster monster = new Monster(name, description, dropItem, roomId, atk, hp);
+                for (Room room : r) {
+                    if (room.getRoomNumber() == roomId) {
+                        room.setMonster(monster);
+                        break;
+                    }
+                    monsters.add(monster);
+                }
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.out.println(e);
         }
 
@@ -233,8 +247,8 @@ public class GameFileReader {
         return items;
     }
 */
-   public static List<Item> loadItems(String filePath) throws IOException {
-       List<Item> items = new ArrayList<>();
+   public static ArrayList<Item> loadItems(String filePath, ArrayList<Room> r) throws IOException {
+       ArrayList<Item> items = new ArrayList<>();
        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
            String line;
 
@@ -247,7 +261,7 @@ public class GameFileReader {
 
                // Parse fields
                int id = Integer.parseInt(parts[0].trim());   // Item ID
-               String roomLocation = parts[1].trim();        // keep as String
+               int roomLocation = Integer.parseInt(parts[1].trim());        // keep as String
                String name = parts[2].trim();
                String type = parts[3].trim().toLowerCase();
                String effect = parts[4].trim();
@@ -262,7 +276,13 @@ public class GameFileReader {
                        } else if (effect.toLowerCase().contains("reduce monster attacks")) {
                            reduction = Integer.parseInt(effect.replaceAll("\\D+", ""));
                        }
-                       items.add(new EquippableItem(name, description, damage, reduction));
+                       Item item = new EquippableItem(name, description, damage, reduction);
+                       for (Room room : r) {
+                           if (room.getRoomNumber() == roomLocation) {
+                               room.addItem(item);
+                           }
+                          items.add(item);
+                       }
                        break;
 
                    case "consumable":
@@ -277,7 +297,14 @@ public class GameFileReader {
                        } else if (effect.toLowerCase().contains("skip")) {
                            effectType = "BYPASS_PUZZLE";
                        }
-                       items.add(new ConsumableItem(name, description, effectType, value));
+                       Item itemtwo = new EquippableItem(name, description, damage, reduction);
+                       for (Room room : r) {
+                           if (room.getRoomNumber() == roomLocation) {
+                               room.addItem(itemtwo);
+                           }
+                            items.add(itemtwo);
+                       }
+
                        break;
 
                    case "useable":
