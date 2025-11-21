@@ -34,6 +34,7 @@ public class Player extends Character {
         if (inventory.size() < MAX_INVENTORY_SIZE) {
             inventory.add(item);
             System.out.println(item.getName() + " added to inventory.");
+            currentRoom.removeItem(item.getName());
         } else {
             System.out.println("Inventory full! Cannot pick up " + item.getName());
         }

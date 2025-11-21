@@ -208,7 +208,7 @@ public class Game {
 
             // Check if monster.txt is defeated
             if (monster.isDead()) {
-                System.out.println("You defeated the monster!");
+                System.out.println("You defeated the monster! It dropped the item: " + monster.getDroppedItem() + "!");
                 player.getCurrentRoom().removeMonster();
                 break;
             }
