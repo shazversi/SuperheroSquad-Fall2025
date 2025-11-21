@@ -1,4 +1,5 @@
-/*Author: Sean Lor*/
+/*Author: Sean Lor
+* Also includes some fixes and adjustments made by the rest of the team members*/
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -56,16 +57,16 @@ public class Game {
                 p.setCurrentRoom(Rooms.get(0));
             }
             while (p.getCurrentRoom() != null) {
-                System.out.println("You are in Room: " + p.getCurrentRoom().getRoomNumber() + " " +  p.getCurrentRoom().getName());
+                System.out.println("You are in Room " + p.getCurrentRoom().getRoomNumber() + ": " +  p.getCurrentRoom().getName());
                 System.out.println("Exit towards (North, East, South, West)?: ");
 
                 String c;
                 c = input.nextLine();
-                if (c.equalsIgnoreCase("Quit game")) {
+                if (c.equalsIgnoreCase("Q")) {
                     System.out.println("Quit the game successfully.");
                     break;
                 }
-                if (c.equals("Help")) {
+                if (c.equals("H")) {
                     try {
                         gameview.Help();
                     } catch (IOException e) {
