@@ -11,6 +11,7 @@ public class Game {
         private ArrayList<Room> Rooms = new ArrayList<>();
         private Player p;
         private GameView gameview;
+        private Puzzle puzzle;
 
         public void start() {
             Scanner input = new Scanner(System.in);
@@ -22,18 +23,18 @@ public class Game {
                 //p = reader.loadPlayer("Player.txt");
                 //Player player = reader.loadPlayer("Player.txt");
                 //List<Room> rooms = reader.loadRooms("Room.csv");
-                Rooms = new ArrayList<>(reader.loadRooms("Room.csv"));
-                p = reader.loadPlayer("Player.txt");
+                Rooms = new ArrayList<>(reader.loadRooms("SuperheroSquad-Fall2025/Room.csv"));
+                p = reader.loadPlayer("SuperheroSquad-Fall2025/Player.txt");
                 if (!Rooms.isEmpty()) {
                     p.setCurrentRoom(Rooms.get(0)); // Set the first room as starting room
                 }
-                GameFileReader.loadPuzzles("Puzzle.csv", Rooms);
+                GameFileReader.loadPuzzles("SuperheroSquad-Fall2025/Puzzle.csv",Rooms);
+
                 //List<Puzzle> puzzles = reader.loadPuzzles("Puzzle.csv");
-                List<Monster> monsters = reader.loadMonsters("monster.txt", Rooms);
+                List<Monster> monsters = reader.loadMonsters("SuperheroSquad-Fall2025/monster.txt",Rooms);
                 //List<Item> items = reader.loadItems("Items.txt");
-                GameFileReader.loadItems("Items.txt", Rooms);
-                
-            } catch (IOException e) {
+                GameFileReader.loadItems("SuperheroSquad-Fall2025/Items.txt",Rooms);
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
@@ -51,8 +52,11 @@ public class Game {
             );
 
             //game status
+            if (!Rooms.isEmpty()) {
+                p.setCurrentRoom(Rooms.get(0));
+            }
             while (p.getCurrentRoom() != null) {
-                System.out.println("You are in Room: " + p.getCurrentRoom().getRoomNumber());
+                System.out.println("You are in Room: " + p.getCurrentRoom().getRoomNumber() + " " +  p.getCurrentRoom().getName());
                 System.out.println("Exit towards (North, East, South, West)?: ");
 
                 String c;
@@ -70,7 +74,7 @@ public class Game {
                     c = input.nextLine();
                 }
                 if (c.equalsIgnoreCase("Explore")) {
-                    //System.out.println(p.getCurrentRoom().explore());
+                    System.out.println(p.getCurrentRoom().getDescription());
                     gameview.roomExplore(p.getCurrentRoom());
                 } else if (c.startsWith("Pickup ")) {
                     String itemName = c.substring(7).trim();
@@ -115,31 +119,23 @@ public class Game {
                         } else {
                             p.getCurrentRoom().visit();
                         }
-                    }
 
-                    //checks if room has a puzzle
-                    if (p.getCurrentRoom().hasPuzzle()) {
-                        Puzzle puzzle = p.getCurrentRoom().getPuzzle();
-                        System.out.println(puzzle.getDescription());
+                        //checks if room has a puzzle
+                        if (p.getCurrentRoom().hasPuzzle() && !p.getCurrentRoom().isPuzzleSolved()) {
+                            Puzzle puzzle = p.getCurrentRoom().getPuzzle();
+                            System.out.println(puzzle.getDescription() + " " + puzzle.getSolutionDescription());
 
-                        //int attemptsLeft = puzzle.getMaxAttempts();
-                        //boolean solved = false;
+                            while (puzzle.attemptPuzzle()) {
+                                System.out.println("Enter your answer: ");
+                                String answer = input.nextLine();
 
-                        //while (attemptsLeft > 0) {
-                        while (puzzle.attemptPuzzle()) {
-                            System.out.println("Enter your answer: ");
-                            String answer = input.nextLine();
-
-                            if (puzzle.checkSolution(answer)) {
-                                String inputp = Player.nextLine();
-                                if (puzzle.isSolved()) {
+                                if (puzzle.checkSolution(answer)) {
                                     System.out.println("You solved the puzzle correctly!");
                                     System.out.println(puzzle.getSuccessMessage());
+                                    p.getCurrentRoom().markPuzzleSolved();
                                     p.getCurrentRoom().removePuzzle();
                                     break;
-
                                 } else {
-                                    //attemptsLeft--;
                                     if (puzzle.attemptsLeft() > 0) {
                                         System.out.println("The answer you provided is wrong, you still have " + puzzle.attemptsLeft() + " attempts. Try one more time.");
                                     } else {
@@ -148,12 +144,10 @@ public class Game {
                                     }
                                 }
                             }
-
-
-                            //if (solved) {
-                            //   p.getCurrentRoom().removePuzzle(); // Remove puzzle from room
-                            //}
                         }
+                    }
+                }
+
 
                         if (p.getCurrentRoom().hasMonster()) {
                             Monster monster = p.getCurrentRoom().getMonster();
@@ -183,8 +177,7 @@ public class Game {
                 }
 
 
-            }
-        }
+
 
     public void startCombat(Player player, Monster monster, Scanner inputScanner) {
         System.out.println("Combat started with " + monster.getName() + "!");
