@@ -23,17 +23,17 @@ public class Game {
                 //p = reader.loadPlayer("Player.txt");
                 //Player player = reader.loadPlayer("Player.txt");
                 //List<Room> rooms = reader.loadRooms("Room.csv");
-                Rooms = new ArrayList<>(reader.loadRooms("Room.csv"));
-                p = reader.loadPlayer("Player.txt");
+                Rooms = new ArrayList<>(reader.loadRooms("SuperheroSquad-Fall2025/Room.csv"));
+                p = reader.loadPlayer("SuperheroSquad-Fall2025/Player.txt");
                 if (!Rooms.isEmpty()) {
                     p.setCurrentRoom(Rooms.get(0)); // Set the first room as starting room
                 }
-                GameFileReader.loadPuzzles("Puzzle.csv",Rooms);
+                GameFileReader.loadPuzzles("SuperheroSquad-Fall2025/Puzzle.csv",Rooms);
 
                 //List<Puzzle> puzzles = reader.loadPuzzles("Puzzle.csv");
-                List<Monster> monsters = reader.loadMonsters("monster.txt",Rooms);
+                List<Monster> monsters = reader.loadMonsters("SuperheroSquad-Fall2025/monster.txt",Rooms);
                 //List<Item> items = reader.loadItems("Items.txt");
-                GameFileReader.loadItems("Items.txt",Rooms);
+                GameFileReader.loadItems("SuperheroSquad-Fall2025/Items.txt",Rooms);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -52,12 +52,9 @@ public class Game {
             );
 
             //game status
-<<<<<<< HEAD
-=======
             if (!Rooms.isEmpty()) {
                 p.setCurrentRoom(Rooms.get(0));
             }
->>>>>>> 6ca98d0 (fixed files)
             while (p.getCurrentRoom() != null) {
                 System.out.println("You are in Room: " + p.getCurrentRoom().getRoomNumber() + " " +  p.getCurrentRoom().getName());
                 System.out.println("Exit towards (North, East, South, West)?: ");
@@ -77,7 +74,7 @@ public class Game {
                     c = input.nextLine();
                 }
                 if (c.equalsIgnoreCase("Explore")) {
-                    //System.out.println(p.getCurrentRoom().explore());
+                    System.out.println(p.getCurrentRoom().getDescription());
                     gameview.roomExplore(p.getCurrentRoom());
                 } else if (c.startsWith("Pickup ")) {
                     String itemName = c.substring(7).trim();

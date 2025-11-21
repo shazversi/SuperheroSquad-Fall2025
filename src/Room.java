@@ -37,7 +37,7 @@ public class Room {
         this.name = name;
         this.description = description;
         this.exits = new HashMap<>();
-        this.visited = visited;
+        this.visited = false;
         this.items = new ArrayList<Item>();
         this.north = north;
         this.east = east;
