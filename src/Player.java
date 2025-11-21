@@ -150,4 +150,13 @@ public class Player extends Character {
     public Inventory getInventory() {
         return null;
     }
-}
+
+    public boolean hasItem(String itemName) {
+        for (Item i : inventory) {
+            if (i.getName().equalsIgnoreCase(itemName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    }

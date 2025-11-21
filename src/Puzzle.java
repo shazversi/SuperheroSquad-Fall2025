@@ -13,6 +13,7 @@ public class Puzzle {
     private String successMessage;
     private String failureMessage;
     private String solutionDescription;
+    private Item reward;
 
     public Puzzle(String puzzleID, int roomNum, String name, String description, int maxAttempts, String solutionDescription, String answer, String successMessage, String failureMessage) {
         this.puzzleID = puzzleID;
@@ -26,9 +27,15 @@ public class Puzzle {
         this.solutionDescription = solutionDescription;
         this.successMessage = successMessage;
         this.failureMessage = failureMessage;
+        this.reward = null;
     }
 
     //getters
+
+    public Item getReward() {
+        return reward;
+    }
+
     public String getPuzzleID() {
         return puzzleID;
     }
@@ -88,5 +95,9 @@ public class Puzzle {
 
     public String getSolutionDescription() {
         return solutionDescription;
+    }
+
+    public void setReward(Item reward) {
+        this.reward = reward;
     }
 }

@@ -21,7 +21,8 @@ public class Game {
             try {
                 GameFileReader reader = new GameFileReader();
                 gameview = new GameView();
-                //p = reader.loadPlayer("Player.txt");
+                //p = reader.
+                //("Player.txt");
                 //Player player = reader.loadPlayer("Player.txt");
                 //List<Room> rooms = reader.loadRooms("Room.csv");
                 Rooms = new ArrayList<>(reader.loadRooms("SuperheroSquad-Fall2025/Room.csv"));
@@ -121,6 +122,7 @@ public class Game {
                             p.getCurrentRoom().visit();
                         }
 
+
                         //checks if room has a puzzle
                         if (p.getCurrentRoom().hasPuzzle() && !p.getCurrentRoom().isPuzzleSolved()) {
                             Puzzle puzzle = p.getCurrentRoom().getPuzzle();
@@ -131,17 +133,30 @@ public class Game {
                                 String answer = input.nextLine();
 
                                 if (puzzle.checkSolution(answer)) {
-                                    System.out.println("You solved the puzzle correctly!");
-                                    System.out.println(puzzle.getSuccessMessage());
-                                    p.getCurrentRoom().markPuzzleSolved();
+                                    if (nextRoom.getRoomNumber() == 4 && !p.hasItem("trident key")) {
+                                        System.out.println("The door is locked. You need the Trident Key from Puzzle 1.");
+                                        continue;
+                                    }
+                                    else {
+                                        System.out.println("You solved the puzzle correctly!");
+                                        System.out.println(puzzle.getSuccessMessage());
+                                        p.getCurrentRoom().markPuzzleSolved();
+                                    }
+
+                                    if (puzzle.getReward() != null) {
+                                        p.pickUpItem(puzzle.getReward());
+                                        System.out.println("You received " + puzzle.getReward().getName());
+                                    }
                                     p.getCurrentRoom().removePuzzle();
                                     break;
+
                                 } else {
-                                    if (puzzle.attemptsLeft() > 0) {
+                                    if (puzzle.attemptsLeft() >= 1) {
                                         System.out.println("The answer you provided is wrong, you still have " + puzzle.attemptsLeft() + " attempts. Try one more time.");
                                     } else {
                                         System.out.println("Failed to solve.");
                                         System.out.println(puzzle.getFailureMessage());
+                                        break;
                                     }
                                 }
                             }
@@ -169,7 +184,8 @@ public class Game {
                                 } else {
                                     System.out.println("Invalid choice. Attack or Ignore:");
                                     //c = Player.nextLine();
-                                    c = input.nextLine();
+                                    //c = input.nextLine();
+                                    decision = Player.nextLine().trim();
 
                                 }
                             }
