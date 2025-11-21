@@ -52,6 +52,12 @@ public class Game {
             );
 
             //game status
+<<<<<<< HEAD
+=======
+            if (!Rooms.isEmpty()) {
+                p.setCurrentRoom(Rooms.get(0));
+            }
+>>>>>>> 6ca98d0 (fixed files)
             while (p.getCurrentRoom() != null) {
                 System.out.println("You are in Room: " + p.getCurrentRoom().getRoomNumber() + " " +  p.getCurrentRoom().getName());
                 System.out.println("Exit towards (North, East, South, West)?: ");
