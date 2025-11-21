@@ -62,11 +62,11 @@ public class Game {
 
                 String c;
                 c = input.nextLine();
-                if (c.equalsIgnoreCase("Quit game")) {
+                if (c.equalsIgnoreCase("Q")) {
                     System.out.println("Quit the game successfully.");
                     break;
                 }
-                if (c.equals("Help")) {
+                if (c.equals("H")) {
                     try {
                         gameview.Help();
                     } catch (IOException e) {
@@ -113,11 +113,6 @@ public class Game {
                         }
                     }
                     if (nextRoom != null) {
-                        if (nextRoom.getRoomNumber() == 4 && !p.hasItem("trident key")) {
-                            System.out.println(puzzle.getDescription() + " " + puzzle.getSolutionDescription());
-                            System.out.println("The door is locked. You need the Trident Key from Puzzle 1.");
-                            continue;
-                        }
                         p.setCurrentRoom(nextRoom);
                         //checks if room was visited
                         if (p.getCurrentRoom().isVisited()) {
@@ -137,9 +132,15 @@ public class Game {
                                 String answer = input.nextLine();
 
                                 if (puzzle.checkSolution(answer)) {
-                                    System.out.println("You solved the puzzle correctly!");
-                                    System.out.println(puzzle.getSuccessMessage());
-                                    p.getCurrentRoom().markPuzzleSolved();
+                                    if (nextRoom.getRoomNumber() == 4 && !p.hasItem("trident key")) {
+                                        System.out.println("The door is locked. You need the Trident Key from Puzzle 1.");
+                                        continue;
+                                    }
+                                    else {
+                                        System.out.println("You solved the puzzle correctly!");
+                                        System.out.println(puzzle.getSuccessMessage());
+                                        p.getCurrentRoom().markPuzzleSolved();
+                                    }
 
                                     if (puzzle.getReward() != null) {
                                         p.pickUpItem(puzzle.getReward());
@@ -149,11 +150,12 @@ public class Game {
                                     break;
 
                                 } else {
-                                    if (puzzle.attemptsLeft() > 0) {
+                                    if (puzzle.attemptsLeft() >= 1) {
                                         System.out.println("The answer you provided is wrong, you still have " + puzzle.attemptsLeft() + " attempts. Try one more time.");
                                     } else {
                                         System.out.println("Failed to solve.");
                                         System.out.println(puzzle.getFailureMessage());
+                                        break;
                                     }
                                 }
                             }
@@ -181,7 +183,8 @@ public class Game {
                                 } else {
                                     System.out.println("Invalid choice. Attack or Ignore:");
                                     //c = Player.nextLine();
-                                    c = input.nextLine();
+                                    //c = input.nextLine();
+                                    decision = Player.nextLine().trim();
 
                                 }
                             }

@@ -27,6 +27,7 @@ public class Puzzle {
         this.solutionDescription = solutionDescription;
         this.successMessage = successMessage;
         this.failureMessage = failureMessage;
+        this.reward = null;
     }
 
     //getters
@@ -94,5 +95,9 @@ public class Puzzle {
 
     public String getSolutionDescription() {
         return solutionDescription;
+    }
+
+    public void setReward(Item reward) {
+        this.reward = reward;
     }
 }

@@ -13,7 +13,7 @@ public class GameView {
 
 	//"Help" command, list of commands
 	public void Help() throws IOException {
-		String file = "UserManual.txt";
+		String file = "SuperheroSquad-Fall2025/UserManual.txt";
 		try (Scanner scanner = new Scanner(new File(file))){
 			while (scanner.hasNextLine()) {
 				System.out.println(scanner.nextLine());

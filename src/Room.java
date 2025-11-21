@@ -5,6 +5,7 @@
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Room {
@@ -92,6 +93,7 @@ public class Room {
         }
         return roomNum;
     }
+
 
     public void addItem(Item a) {
         items.add(a);
@@ -201,5 +203,14 @@ public class Room {
 
     public void removePuzzle() {
         this.puzzle = null;
+    }
+
+    public static Room findRoomByNumber(List<Room> rooms, int roomNumber) {
+        for (Room room : rooms) {
+            if (room.getRoomNumber() == roomNumber) {
+                return room;
+            }
+        }
+        return null;
     }
 }
