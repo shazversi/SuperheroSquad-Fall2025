@@ -134,19 +134,17 @@ public class Game {
                                 if (puzzle.checkSolution(answer)) {
                                     if (nextRoom.getRoomNumber() == 4 && !p.hasItem("trident key")) {
                                         System.out.println("The door is locked. You need the Trident Key from Puzzle 1.");
-                                        continue;
-                                    }
+                                }
                                     else {
                                         System.out.println("You solved the puzzle correctly!");
                                         System.out.println(puzzle.getSuccessMessage());
                                         p.getCurrentRoom().markPuzzleSolved();
                                     }
 
-                                    if (puzzle.getReward() != null) {
-                                        p.pickUpItem(puzzle.getReward());
-                                        System.out.println("You received " + puzzle.getReward().getName());
+                                    if (puzzle.getPuzzleID().equals("P1")) {
+                                        Item tridentKey = new Item("Trident Key", "A silver key that unlocks the door", "Useable");
+                                        p.pickUpItem(tridentKey);
                                     }
-                                    p.getCurrentRoom().removePuzzle();
                                     break;
 
                                 } else {
