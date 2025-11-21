@@ -28,7 +28,8 @@ public class Game {
                 Rooms = new ArrayList<>(reader.loadRooms("SuperheroSquad-Fall2025/Room.csv"));
                 p = reader.loadPlayer("SuperheroSquad-Fall2025/Player.txt");
                 if (!Rooms.isEmpty()) {
-                    p.setCurrentRoom(Rooms.get(0)); // Set the first room as starting room
+                    p.setCurrentRoom(Rooms.get(0));
+                    p.getCurrentRoom().visit();// Set the first room as starting room
                 }
                 GameFileReader.loadPuzzles("SuperheroSquad-Fall2025/Puzzle.csv",Rooms);
 
@@ -65,9 +66,9 @@ public class Game {
                 c = input.nextLine();
                 if (c.equalsIgnoreCase("Q")) {
                     System.out.println("Quit the game successfully.");
-                    break;
+                    System.exit(0);
                 }
-                if (c.equals("H")) {
+                if (c.equalsIgnoreCase("H")) {
                     try {
                         gameview.Help();
                     } catch (IOException e) {
