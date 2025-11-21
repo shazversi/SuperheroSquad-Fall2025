@@ -109,8 +109,8 @@ public class GameFileReader {
 
                 Puzzle puzzle = new Puzzle(puzzleID, roomNum, name, description, maxAttempts, solutionDescription, answer, successMessage, failureMessage);
 
-                if (name.equalsIgnoreCase("P1 reward")) {
-                    Item tridentKey = new Item("Trident Key", "Useable", "A silver key that unlocks the door");
+                if (name.equalsIgnoreCase("N/A: P1 reward")) {
+                    Item tridentKey = new Item(name, description, "Useable");
 
                     puzzle.setReward(tridentKey);
                 }
