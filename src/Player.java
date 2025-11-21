@@ -63,6 +63,7 @@ public class Player extends Character {
             if (i.getName().equalsIgnoreCase(itemName) && i instanceof EquippableItem) {
                 equippedItem = i;
                 System.out.println(i.getName() + " equipped.");
+                getDamage();
                 return;
             }
         }
@@ -126,7 +127,13 @@ public class Player extends Character {
     }
 
     public int getDamage() {
-        return attack;
+        int totalDamage = attack;
+
+        if (equippedItem != null && equippedItem instanceof EquippableItem) {
+            totalDamage += ((EquippableItem) equippedItem).getDamageBoost();
+        }
+
+        return totalDamage;
     }
 
     public void takeDamage(int amount) {
