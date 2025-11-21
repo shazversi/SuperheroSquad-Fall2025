@@ -13,6 +13,7 @@ public class Puzzle {
     private String successMessage;
     private String failureMessage;
     private String solutionDescription;
+    private Item reward;
 
     public Puzzle(String puzzleID, int roomNum, String name, String description, int maxAttempts, String solutionDescription, String answer, String successMessage, String failureMessage) {
         this.puzzleID = puzzleID;
@@ -29,6 +30,11 @@ public class Puzzle {
     }
 
     //getters
+
+    public Item getReward() {
+        return reward;
+    }
+
     public String getPuzzleID() {
         return puzzleID;
     }
